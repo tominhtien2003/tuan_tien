@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float rotateSpeedOfWheel;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float rotateSpeed;
     [SerializeField] private Transform[] wheels;
-    [SerializeField] private Transform gunBarrel;
     [SerializeField] private GameInput gameInput;
 
     private Rigidbody rb;
@@ -30,11 +30,6 @@ public class PlayerController : MonoBehaviour
     {
         isMoving = true;
     }
-
-    private void Update()
-    {
-        
-    }
     private void FixedUpdate()
     {
         HandleMovement();
@@ -51,25 +46,23 @@ public class PlayerController : MonoBehaviour
     }
     private void HandleMovement()
     {
-        Vector2 inputVector = gameInput.GetMovementInputVectorNormalized();
+        Vector2 inputVector = gameInput.GetMovementInputVector();
 
-        Vector3 moveDirection = transform.TransformDirection(new Vector3(inputVector.x, 0f, inputVector.y));
+        Vector3 moveDirec = transform.forward * inputVector.y;
 
-        if (moveDirection != Vector3.zero)
+        if (inputVector.y != 0f)
         {
             HandleAnimationWheel();
-
-            transform.position += moveSpeed * moveDirection * Time.deltaTime;
-
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime);
         }
 
-    }
-    private void HandleRotateGun()
-    {
+        rb.velocity = moveDirec * moveSpeed;
 
+        if (inputVector.x != 0f)
+        {
+            Quaternion targetRotation = Quaternion.Euler(0f, inputVector.x * rotateSpeed * Time.deltaTime, 0f);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime * rotateSpeed);
+        }
     }
     private void OnDisable()
     {
