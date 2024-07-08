@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     private float offsetDis;
     private Vector3 lastMousePosition;
     private bool isSwiping;
+    private int type = 0;
 
     private void Start()
     {
@@ -46,9 +47,22 @@ public class CameraController : MonoBehaviour
             ResetSwipeState();
         }
     }
-
+    public void ZoomViewfinder()
+    {
+        if (type == 0)
+        {
+            Camera.main.fieldOfView = 20;
+        }
+        else
+        {
+            Camera.main.fieldOfView = 60;
+        }
+        type = 1 - type;
+    }
     private void UpdateCameraPosition()
     {
+        if (target == null) return;
+
         Vector3 offset = -target.forward * offsetDis;
 
         offset.y = 6.7f;
@@ -77,9 +91,10 @@ public class CameraController : MonoBehaviour
     }
     private void RotateGunBarrel()
     {
+        if (target == null || gunBarrel == null) return;
         if (target.forward == gunBarrel.forward)
         {
-            //Debug.Log("Same direction");
+            Debug.Log("Same direction");
             return;
         }
 

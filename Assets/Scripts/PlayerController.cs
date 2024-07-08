@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
-    private bool isMoving;
+    public bool isMoving;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = moveDirec * moveSpeed;
 
-        if (inputVector.x != 0f)
+        if (inputVector != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.Euler(0f, inputVector.x * rotateSpeed * Time.deltaTime, 0f);
 

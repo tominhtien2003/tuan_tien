@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class BulletController : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class BulletController : MonoBehaviour
     }
     private void Update()
     {
-        if (timeLife <=0 )
+        if (timeLife <= 0)
         {
             Destroy(gameObject);
         }
@@ -27,6 +26,16 @@ public class BulletController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject obj = collision.gameObject;
+
+        if (obj.layer == 6)
+        {
+            obj.GetComponent<EnemyHealth>().TakeDamage(damage);
+        }
+        if (obj.tag == "Player")
+        {
+            obj.GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
         Destroy(gameObject);
         Debug.Log(collision.gameObject);
     }

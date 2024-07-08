@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour , IHealth
+public class EnemyHealth : MonoBehaviour, IHealth
 {
     [SerializeField] Image healthBar;
 

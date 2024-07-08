@@ -8,7 +8,10 @@ public class Attack : MonoBehaviour
     [SerializeField] float timeCooldown;
     private void Update()
     {
-        timeCooldown -= Time.deltaTime;
+        if (timeCooldown > 0f)
+        {
+            timeCooldown -= Time.deltaTime;
+        }   
     }
     public void Shoot()
     {
