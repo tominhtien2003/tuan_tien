@@ -64,11 +64,11 @@ public class GameController_tuan : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log("Exited");
+        SceneManager.LoadScene(0);
     }
 
     public void PlayAgain()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 }

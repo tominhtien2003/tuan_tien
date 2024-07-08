@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UiManager_tuan : MonoBehaviour
 {
@@ -13,16 +14,19 @@ public class UiManager_tuan : MonoBehaviour
     private bool openedSetting;
     private bool openedMail;
     private bool openedMenu;
+    private bool choosedMap;
 
+    public Color mixColor;
+    public List<GameObject> map;
     public List<GameObject> features;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
             return;
@@ -31,7 +35,7 @@ public class UiManager_tuan : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void Shop()
@@ -58,22 +62,37 @@ public class UiManager_tuan : MonoBehaviour
         features[3].SetActive(openedBag);
     }
 
-    private void Setting()
+    public void Setting()
     {
         openedSetting = !openedSetting;
         features[4].SetActive(openedSetting);
     }
 
-    private void Mail()
+    public void Mail()
     {
         openedMail = !openedMail;
         features[5].SetActive(openedMail);
     }
 
-    private void Menu()
+    public void Menu()
     {
         openedMenu = !openedMenu;
         features[6].SetActive(openedMenu);
+    }
+
+    public void ChooseMap()
+    {
+        choosedMap = !choosedMap;
+        if (choosedMap)
+        {
+            map[0].GetComponent<Image>().color = mixColor;
+            map[1].GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            map[0].GetComponent<Image>().color = Color.white;
+            map[1].GetComponent<Image>().color = mixColor;
+        }
     }
 }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
-public class EnemyController_tuan : MonoBehaviour
+public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
 {
     private int maxHealth = 200;
     private int health;
@@ -23,7 +23,7 @@ public class EnemyController_tuan : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        Health = MaxHealth;
+        health = maxHealth;
         InvokeRepeating(nameof(Move), 0, 0.2f);
     }
 
@@ -48,22 +48,10 @@ public class EnemyController_tuan : MonoBehaviour
         }
     }
 
-    public int Health
-    {
-        get { return health; }
-        set { health = Mathf.Clamp(value, 0, MaxHealth); }
-    }
-
-    public int MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
-
     public void TakeDamage(int amount)
     {
-        Health -= amount;
-        if (Health <= 0)
+        health -= amount;
+        if (health <= 0)
         {
             Dead();
         }
@@ -71,13 +59,12 @@ public class EnemyController_tuan : MonoBehaviour
 
     public void Heal(int amount)
     {
-        Health += amount;
+        health += amount;
     }
 
     public void Dead()
     {
-        Debug.Log("Killed enemy");
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private IEnumerator RotateBarrelAndAttack(Vector3 targetDirection)
@@ -137,12 +124,5 @@ public class EnemyController_tuan : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         canAttack = true;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-        }
     }
 }

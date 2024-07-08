@@ -9092,7 +9092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650e7057b26eabf49a7992accf16631c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSileder: {fileID: 879196493}
+  healthSlider: {fileID: 879196493}
   gameOver: {fileID: 270501422}
 --- !u!114 &949061946
 MonoBehaviour:
