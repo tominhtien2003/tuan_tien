@@ -79,17 +79,15 @@ public class CameraHandle_tuan : MonoBehaviour
 
     public void CameraZoom()
     {
-        if (Zoomed)
+        if (!Zoomed)
         {
-            transform.position = cameraPosition.position;
-            Zoomed = false;
+            Camera.main.fieldOfView = 30;
         }
         else
         {
-            Debug.Log("zoomed");
-            transform.position += transform.forward * 50f;
-            Zoomed = true;
+            Camera.main.fieldOfView = 60;
         }
+        Zoomed = !Zoomed;
     }
 
 

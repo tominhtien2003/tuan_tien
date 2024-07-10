@@ -15,10 +15,14 @@ public class UiManager_tuan : MonoBehaviour
     private bool openedMail;
     private bool openedMenu;
     private bool choosedMap;
+    private bool chooseTank;
 
     public Color mixColor;
     public List<GameObject> map;
     public List<GameObject> features;
+
+    public string url = "https://www.youtube.com/";
+    public string urlFace = "https://www.facebook.com/";
     private void Awake()
     {
         if (instance == null)
@@ -80,6 +84,20 @@ public class UiManager_tuan : MonoBehaviour
         features[6].SetActive(openedMenu);
     }
 
+    public void Tank()
+    {
+        chooseTank = !chooseTank;
+        features[7].SetActive(chooseTank);
+    }
+
+    public void Youtube()
+    {
+        Application.OpenURL(url);
+    }
+    public void FaceBook()
+    {
+        Application.OpenURL(urlFace);
+    }
     public void ChooseMap()
     {
         choosedMap = !choosedMap;

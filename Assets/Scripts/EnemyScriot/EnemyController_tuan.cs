@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
@@ -15,8 +16,10 @@ public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
     public PlayerController_tuan player;
 
     public GameObject bulletPrefab;
+    public Slider healthSlider;
     public Transform spawnPoint;
-
+    public Camera mainCamera;
+    public Vector3 offset;
     private bool canAttack = true;
 
     private void Start()
@@ -25,13 +28,21 @@ public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
         rb = GetComponent<Rigidbody>();
         health = maxHealth;
         InvokeRepeating(nameof(Move), 0, 0.2f);
+        healthSlider.value = 1f;
+        mainCamera = Camera.main;
     }
 
     private void Update()
     {
         FindPlayer();
+        HealthPosition();
     }
 
+    private void HealthPosition()
+    {
+        Vector3 screenPosition = mainCamera.WorldToScreenPoint(transform.position) + offset;
+        healthSlider.transform.position = screenPosition;
+    }
     private void Move()
     {
         if (player == null) return;
@@ -51,6 +62,7 @@ public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
     public void TakeDamage(int amount)
     {
         health -= amount;
+        healthSlider.value = (float)health / maxHealth;
         if (health <= 0)
         {
             Dead();
@@ -60,11 +72,17 @@ public class EnemyController_tuan : MonoBehaviour,IHealth_tuan
     public void Heal(int amount)
     {
         health += amount;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        healthSlider.value = (float)health / maxHealth;
     }
 
     public void Dead()
     {
         Destroy(gameObject);
+        healthSlider.gameObject.SetActive(false);
     }
 
     private IEnumerator RotateBarrelAndAttack(Vector3 targetDirection)
