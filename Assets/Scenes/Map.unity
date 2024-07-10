@@ -4872,8 +4872,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1216679647}
   gunBarrel: {fileID: 4769657413686688}
-  rotateSpeedGunBarrel: 25
-  rotateSpeedCameraWhenSwipe: 80
+  rotateSpeedGunBarrel: 30
+  rotateSpeedCameraWhenSwipe: 60
 --- !u!1 &1134380018
 GameObject:
   m_ObjectHideFlags: 0
@@ -5063,7 +5063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeedOfWheel: 70
-  moveSpeed: 10
+  moveSpeed: 15
   rotateSpeed: 30
   wheels:
   - {fileID: 4431886394762544}
